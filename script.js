@@ -52,19 +52,20 @@ const defaultColumnConfig = {
 // ==========================================
 
 const defaultFieldConfig = {
-    usePipe: false, // ALTERADO: de true para false
-    uppercase: false, // MANTIDO: false
-    bold: false, // MANTIDO: false
-    alignment: 'left', // MANTIDO: left
-    fontSize: 11, // MANTIDO: 11
-    columnLayout: 'single', // MANTIDO: single
-    overflowRule: 'wrap', // MANTIDO: wrap
-    maxChars: 0, // MANTIDO: 0
-    classificationMode: 'both', // MANTIDO: both
-    classificationSeparator: 'pipe', // MANTIDO: pipe
-    yearMode: 'both', // MANTIDO: both
-    yearSeparator: ' - ', // MANTIDO:  - 
-    forceClassification: false // MANTIDO: false
+    showLabel: false,
+    usePipe: false,
+    uppercase: false,
+    bold: false,
+    alignment: 'left',
+    fontSize: 11,
+    columnLayout: 'single',
+    overflowRule: 'wrap',
+    maxChars: 0,
+    classificationMode: 'both',
+    classificationSeparator: 'space', // ALTERADO: de 'pipe' para 'space'
+    yearMode: 'both',
+    yearSeparator: ' - ',
+    forceClassification: false
 };
 
 
@@ -97,23 +98,23 @@ const fieldTypeMap = {
 
 const headerLabelOptionsByModel = {
     'Modelo 1': {
-        top: ['CLASSIFICACAO - C12']
+        top: ['Classificação - c17']
     },
     'Modelo 2': {
-        top: ['DEPARTAMENTO - C7'],
-        title: ['CLASSIFICACAO - C12'],
-        extra: ['CLASSIFICACAO - C12']
+        top: ['Departamento - c7'],
+        title: ['Classificação - c17'],
+        extra: ['Classificação - c17']
     },
     'Modelo 3': {
-        top: ['UNIDADE', 'CLASSIFICACAO - C12'],
-        title: ['Nº CAIXA', 'CLASSIFICACAO - C12'],
-        extra: ['DEPARTAMENTO', 'CLASSIFICACAO - C12'],
-        line4: ['TIPO DOCUMENTAL', 'CLASSIFICACAO - C12'],
-        line5: ['CODIGO', 'CLASSIFICACAO - C12'],
+        top: ['Unidade - c90'],
+        title: ['Identificador SOS - c1'],
+        extra: ['Departamento - c7'],
+        line4: ['Tipo Documental - c16'],
+        line5: ['Código - c93'],
     },
     'Modelo 4': {
-        top: ['DEPARTAMENTO - C7'],
-        title: ['CLASSIFICACAO - C12']
+        top: ['Departamento - c7'],
+        title: ['Classificação - c17']
 
     }
 };
@@ -131,7 +132,8 @@ const defaultMirrorConfig = {
     logoSize: 2,
     logoPosition: 'center',
     logoFit: 'default',
-    barcodeSource: 'cliente',
+    barcodeSource: 'sos', // Alterado de 'cliente' para 'sos' (padrão RN11)
+    barcodeCustomField: 'c5', // Padrão para quando for 'personalizado'
     customValues: {
         'top_label': 'SETOR',
         'top_value': '',
@@ -148,7 +150,7 @@ const defaultMirrorConfig = {
         'data_1_value': '',
         'data_2_label': 'ANO DESTINAÇÃO',
         'data_2_value': '',
-        'interm_label': 'INTERMEDIÁRIO',
+        'interm_label': ' FASE INTERMEDIÁRIA',
         'interm_value': '',
         'dest_label': 'DESTINAÇÃO FINAL',
         'dest_value': '',
@@ -167,14 +169,14 @@ const igesMirrorConfig = {
     logoImage: './logo9.png',
     customValues: {
         top_label: 'UNIDADE',
-        top_value: 'Unidade: IGESDF-HOSPITAL DE BASE',
+        top_value: 'UNIDADE: ',
         title_label: 'Nº CAIXA',
-        title_value: 'Nº Caixa:',
+        title_value: 'Nº CAIXA:',
         extra_label: 'DEPARTAMENTO',
-        extra_value: 'Departamento:',
+        extra_value: 'DEPARTAMENTO:',
         line4_label: 'TIPO DOCUMENTAL',
-        line4_value: 'Tipo Documental: Prontuário Médico',
-        main_text: 'CID TORRES - 186023\nMARCILENE DA SILVA PINTO - 326023\nMARCIO CASSIANO RODRIGUES - 366023\nVITORIA LAZARA LIMA DO NORTE - 386023\nWESLEY SILVA SANTOS - 396023\nJOSE LEAO DE SOUZA FILHO - 406023\nANTONIO PEREIRA DA SILVA - 416023\nROSIANE DA SILVA DARES - 845923\nANTONIO LAILSON RIBEIRO LIMA - 905923',
+        line4_value: 'TIPO DOCUMENTAL:  ',
+        main_text: 'PACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000\nPACIENTE - 000000',
         barcode_value: 'Código de Barras'
     }
 };
@@ -186,8 +188,8 @@ const codigoUnicoMirrorConfig = {
     includeLogo: true,
     logoImage: './logo1.png',
     customValues: {
-        top_label: '024.1',
-        top_value: 'FOLHAS DE PAGAMENTO. FICHAS FINANCEIRAS',
+        top_label: 'CLASSIFICAÇÃO',
+        top_value: ' ',
         title_label: '',
         title_value: '',
         main_text: '',
@@ -195,8 +197,8 @@ const codigoUnicoMirrorConfig = {
         data_1_value: '',
         data_2_label: 'ANO DESTINAÇÃO',
         data_2_value: '',
-        interm_label: 'INTERMEDIÁRIO',
-        interm_value: '95 ANOS',
+        interm_label: ' FASE INTERMEDIÁRIA',
+        interm_value: ' ',
         dest_label: 'DESTINAÇÃO FINAL',
         dest_value: '',
         barcode_value: 'Código de Barras'
@@ -211,20 +213,20 @@ const diretoriaMirrorConfig = {
     logoImage: './logo2.png',
     customValues: {
         top_label: 'DEPARTAMENTO',
-        top_value: 'DAF - Diretoria de Administração Financeira',
-        title_label: '023.11',
-        title_value: 'FOLHAS DE PAGAMENTO',
-        extra_label: '024.11',
-        extra_value: 'TESTE DE PAGAMENTO',
+        top_value: ' ',
+        title_label: 'CLASSIFICAÇÃO',
+        title_value: ' ',
+        extra_label: 'CLASSIFICAÇÃO',
+        extra_value: ' ',
         main_text: '',
         data_1_label: 'ANO PRODUÇÃO',
-        data_1_value: '2025',
+        data_1_value: ' ',
         data_2_label: 'ANO DESTINAÇÃO',
-        data_2_value: '2026',
-        interm_label: 'INTERMEDIÁRIO',
-        interm_value: '1',
+        data_2_value: ' ',
+        interm_label: 'FASE INTERMEDIÁRIA',
+        interm_value: ' ',
         dest_label: 'DESTINAÇÃO FINAL',
-        dest_value: '5',
+        dest_value: ' ',
         barcode_value: 'Código de Barras'
     }
 };
@@ -238,18 +240,18 @@ const novacapMirrorConfig = {
     customValues: {
         rodape: "lalala",
         top_label: 'DEPARTAMENTO',
-        top_value: 'DMED',
-        title_label: '026.15',
-        title_value: 'PRONTUÁRIOS MÉDICOS',
-        main_text: 'MATRÍCULA: 74541-3 | 74549-9 | 74544-8 | 74545-6',
+        top_value: ' ',
+        title_label: 'CLASSIFICAÇÃO',
+        title_value: ' ',
+        main_text: ' ',
         data_1_label: 'ANO PRODUÇÃO',
-        data_1_value: '1998',
+        data_1_value: ' ',
         data_2_label: 'ANO DESTINAÇÃO',
-        data_2_value: '1998',
-        interm_label: 'INTERMEDIÁRIO',
-        interm_value: '95 ANOS',
+        data_2_value: ' ',
+        interm_label: ' FASE INTERMEDIÁRIA',
+        interm_value: ' ',
         dest_label: 'DESTINAÇÃO FINAL',
-        dest_value: 'ELIMINAÇÃO',
+        dest_value: ' ',
         barcode_value: 'Código de Barras'
     }
 };
@@ -270,7 +272,7 @@ const mteMirrorConfig = {
         data_1_value: '',
         data_2_label: 'ANO DESTINAÇÃO',
         data_2_value: '',
-        interm_label: 'INTERMEDIÁRIO',
+        interm_label: ' FASE INTERMEDIÁRIA',
         interm_value: '',
         dest_label: 'DESTINAÇÃO FINAL',
         dest_value: '',
@@ -294,7 +296,7 @@ const cadeMirrorConfig = {
         data_1_value: '',
         data_2_label: 'ANO DESTINAÇÃO',
         data_2_value: '',
-        interm_label: 'INTERMEDIÁRIO',
+        interm_label: ' FASE INTERMEDIÁRIA',
         interm_value: '',
         dest_label: 'DESTINAÇÃO FINAL',
         dest_value: '',
@@ -320,7 +322,7 @@ const hmabMirrorConfig = {
         data_1_value: '',
         data_2_label: 'ANO DESTINAÇÃO',
         data_2_value: '',
-        interm_label: 'INTERMEDIÁRIO',
+        interm_label: ' FASE INTERMEDIÁRIA',
         interm_value: '',
         dest_label: 'DESTINAÇÃO FINAL',
         dest_value: '',
@@ -374,7 +376,7 @@ const equatorialEnergiaMirrorConfig = {
         data_1_value: '',
         data_2_label: 'ANO DESTINAÇÃO',
         data_2_value: '',
-        interm_label: 'INTERMEDIÁRIO',
+        interm_label: ' FASE INTERMEDIÁRIA',
         interm_value: '',
         dest_label: 'DESTINAÇÃO FINAL',
         dest_value: '',
@@ -385,7 +387,7 @@ const equatorialEnergiaMirrorConfig = {
 const labelOptions = [
     { value: 'SETOR', label: 'Setor' },
     { value: 'DEPARTAMENTO', label: 'Departamento' },
-    { value: 'UNIDADE', label: 'Unidade' },
+    { value: 'UNIDADE', label: 'UNIDADE' },
     { value: 'CLIENTE', label: 'Cliente' },
     { value: 'EMPRESA', label: 'Empresa' }
 ];
@@ -398,21 +400,27 @@ const titleOptions = [
 ];
 
 const data1Options = [
-    { value: 'ANO PRODUÇÃO', label: 'Ano Produção' }
+    { value: 'ANO INICIAL - N1', label: 'Ano Inicial - n1' },
+    { value: 'ANO FINAL - N2', label: 'Ano Final - n2' }
+];
+
+
+
+
+
+
+const data2Options = [
+    { value: 'ANO INICIAL - N1', label: 'Ano Inicial - n1' },
+    { value: 'ANO FINAL - N2', label: 'Ano Final - n2' } // <- NOVA OPÇÃO ADICIONADA
 ];
 
 const intermOptions = [
-    { value: 'INTERMEDIÁRIO', label: 'Intermediário' },
-    { value: 'PRAZO', label: 'Prazo' },
-    { value: 'CORRENTE', label: 'Fase Corrente' },
-    { value: 'F. INTERM.', label: 'F. Interm.' }
+    { value: ' FASE INTERMEDIÁRIA', label: 'Fase Intermediária - c19' }
 ];
 
 const destOptions = [
-    { value: 'DESTINAÇÃO FINAL', label: 'Destinação Final' },
-    { value: 'DESTINAÇÃO', label: 'Destinação' },
-    { value: 'DESTINO', label: 'Destino' },
-    { value: 'AÇÃO FINAL', label: 'Ação Final' }
+    { value: 'DESTINAÇÃO FINAL', label: 'Destinação Final - c20' }
+
 ];
 
 let state = {
@@ -486,21 +494,15 @@ function normalizeMirrorConfig(config) {
 }
 
 function getBarcodeDisplayValue(config) {
-    // Garantir que barcodeSource existe
-    const source = config.barcodeSource || 'cliente';
-
-    console.log('getBarcodeDisplayValue - source:', source); // DEBUG
+    const source = config.barcodeSource || 'sos';
+    const customField = config.barcodeCustomField || 'c5';
 
     if (source === 'sos') {
-        return {
-            barcode: '12345689',
-            display: 'CB002966500002805OS'
-        };
+        return { barcode: 'SOS-12345', display: 'SOS-12345' };
     } else {
-        return {
-            barcode: 'CLI-001',
-            display: 'CLI-001'
-        };
+        // Simulação do valor baseado no campo escolhido
+        const val = customField === 'c5' ? 'CLI-C5-001' : 'CONC-C11-99';
+        return { barcode: val, display: val };
     }
 }
 
@@ -617,7 +619,13 @@ function renderColumnFieldGroups(modelName, columnConfig) {
                             ${columnConfig.maxColumns >= 3 ? '<option value="3">3 Colunas</option>' : ''}
                             ${columnConfig.maxColumns >= 4 ? '<option value="4">4 Colunas</option>' : ''}
                         </select>
-                        <button class="btn btn-outline btn-sm" onclick="removeFieldGroup(${groupIndex})" title="Remover grupo">&#128465;</button>
+                        // Procure por este trecho dentro de renderColumnFieldGroups e substitua o conteúdo do botão:
+<button class="btn btn-outline btn-sm" onclick="removeFieldGroup(${groupIndex})" title="Remover grupo">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    </svg>
+</button>
                     </div>
                 </div>
                 <div class="column-fields-container" style="display: grid; grid-template-columns: repeat(${group.columns}, 1fr); gap: 8px; min-height: 60px;">
@@ -777,7 +785,7 @@ function getFieldType(fieldKey) {
         fieldKey === 'line4_value' || fieldKey === 'line5_value' || fieldKey === 'line6_value') {
 
         const labelKey = fieldKey.replace('_value', '_label');
-        if (config.customValues && config.customValues[labelKey] === 'CLASSIFICACAO - C12') {
+        if (config.customValues && config.customValues[labelKey] === 'Classificação - c17') {
             return FieldType.CLASSIFICATION;
         }
     }
@@ -901,7 +909,7 @@ function formatFieldValue(modelName, fieldKey, fieldLabel, rawValue) {
             'comma': ', ',
             'semicolon': '; ',
             'hyphen': ' - ',
-            'space': ' '
+            'space': ' ' // Isso garante que o valor 'space' resulte em apenas um espaço em branco
         };
         const separator = separatorMap[config.classificationSeparator || 'pipe'];
 
@@ -933,6 +941,21 @@ function formatFieldValue(modelName, fieldKey, fieldLabel, rawValue) {
     // REMOVIDO: não mostrar mais o nome do campo
     // Apenas usar o pipe se configurado, mas sem o label
     const usePipe = config.usePipe;
+
+    // Aplicar o Nome do Campo (Label) se a opção estiver marcada
+    if (config.showLabel && displayLabel) {
+        if (config.usePipe) {
+            formattedText = `${displayLabel} | ${formattedText}`;
+        } else {
+            // Se for um campo de classificação, formata com as palavras exatas "Código" e "Assunto"
+            if (fieldType === FieldType.CLASSIFICATION && formattedText.includes(' | ')) {
+                const parts = formattedText.split(' | ');
+                formattedText = `Código: ${parts[0].trim()} | Assunto: ${parts[1].trim()}`;
+            } else {
+                formattedText = `${displayLabel}: ${formattedText}`;
+            }
+        }
+    }
 
     // formattedText já contém o valor formatado
     // Não adicionamos mais o label
@@ -988,14 +1011,10 @@ function openFieldConfigModal(key, label) {
 
     if (!modal) return;
 
-    title.textContent = `Configurar: ${label}`;
+    title.textContent = `Configuração do Campo`;
 
     const fieldConfig = getFieldConfig(modelName, key);
     const fieldType = getFieldType(key);
-
-
-    document.getElementById('config-use-pipe').checked = fieldConfig.usePipe;
-    document.getElementById('config-uppercase').checked = fieldConfig.uppercase;
     document.getElementById('config-bold').checked = fieldConfig.bold;
 
     // NOVO: input numérico para tamanho da fonte
@@ -1004,36 +1023,9 @@ function openFieldConfigModal(key, label) {
         fontSizeInput.value = fieldConfig.fontSize || 11;
     }
 
-    const limitCharactersToggle = document.getElementById('config-limit-characters');
-    if (limitCharactersToggle) limitCharactersToggle.checked = false;
-    const breakLineToggle = document.getElementById('config-break-line');
-    if (breakLineToggle) breakLineToggle.checked = false;
-    const autoReduceToggle = document.getElementById('config-auto-reduce-font');
-    if (autoReduceToggle) autoReduceToggle.checked = false;
 
-    // REMOVA este bloco dos radios de fonte:
-    // const fontSizeRadios = document.querySelectorAll('input[name="config-font-size"]');
-    // fontSizeRadios.forEach(radio => {
-    //     if (radio.value === (fieldConfig.fontSize || 'medium')) {
-    //         radio.checked = true;
-    //     }
-    // });
 
-    const overflowRadios = document.querySelectorAll('input[name="config-overflow-rule"]');
-    overflowRadios.forEach(radio => {
-        if (radio.value === (fieldConfig.overflowRule || 'wrap')) {
-            radio.checked = true;
-        }
-    });
 
-    const columnLayoutRadios = document.querySelectorAll('input[name="config-column-layout"]');
-    columnLayoutRadios.forEach(radio => {
-        if (radio.value === (fieldConfig.columnLayout || 'single')) {
-            radio.checked = true;
-        }
-    });
-
-    document.getElementById('config-max-chars').value = fieldConfig.maxChars || 0;
 
     const alignmentRadios = document.querySelectorAll('input[name="config-alignment"]');
     alignmentRadios.forEach(radio => {
@@ -1066,6 +1058,10 @@ function openFieldConfigModal(key, label) {
     } else if (fieldType === FieldType.YEAR) {
         if (yearDiv) yearDiv.style.display = 'block';
 
+        // Carrega quais colunas do banco de dados representam o Inicial e o Final
+        document.getElementById('config-year-field-start').value = fieldConfig.yearFieldStart || '';
+        document.getElementById('config-year-field-end').value = fieldConfig.yearFieldEnd || '';
+
         const modeRadios = document.querySelectorAll('input[name="config-year-mode"]');
         modeRadios.forEach(radio => {
             if (radio.value === (fieldConfig.yearMode || 'both')) {
@@ -1081,7 +1077,7 @@ function openFieldConfigModal(key, label) {
 
     setupPreviewListeners();
     updateFieldPreview();
-    toggleContentLimitVisibility();
+
 
     modal.style.display = 'flex';
 }
@@ -1095,15 +1091,10 @@ function closeFieldConfigModal() {
 function setupPreviewListeners() {
     const inputs = [
         'config-show-label',
-        'config-use-pipe',
         'config-uppercase',
         'config-bold',
         'config-font-size', // ADICIONAR esta linha (está faltando!)
-        'config-max-chars',
-        'config-limit-characters',
-        'config-break-line',
-        'config-auto-reduce-font',
-        'content-limit-input'
+
     ];
 
     inputs.forEach(id => {
@@ -1118,10 +1109,7 @@ function setupPreviewListeners() {
 
 
     // O resto continua igual...
-    document.querySelectorAll('input[name="config-overflow-rule"]').forEach(radio => {
-        radio.removeEventListener('change', updateFieldPreview);
-        radio.addEventListener('change', updateFieldPreview);
-    });
+
 
     document.querySelectorAll('input[name="config-alignment"]').forEach(radio => {
         radio.removeEventListener('change', updateFieldPreview);
@@ -1143,12 +1131,7 @@ function setupPreviewListeners() {
     document.getElementById('config-year-separator')?.addEventListener('change', updateFieldPreview);
 }
 
-function toggleContentLimitVisibility() {
-    const limiter = document.getElementById('config-limit-characters');
-    const wrapper = document.getElementById('content-limit-wrapper');
-    if (!wrapper) return;
-    wrapper.style.display = limiter && limiter.checked ? 'block' : 'none';
-}
+
 
 function updateFieldPreview() {
     const preview = document.getElementById('field-config-preview');
@@ -1157,13 +1140,12 @@ function updateFieldPreview() {
     const fieldType = getFieldType(currentConfigField.key);
 
     const showLabel = document.getElementById('config-show-label')?.checked || false;
-    const usePipe = document.getElementById('config-use-pipe')?.checked || false;
+
     const uppercase = document.getElementById('config-uppercase')?.checked || false;
     const bold = document.getElementById('config-bold')?.checked || false;
 
     const fontSize = parseInt(document.getElementById('config-font-size')?.value) || 11;
-    const overflowRule = document.querySelector('input[name="config-overflow-rule"]:checked')?.value || 'wrap';
-    const maxChars = parseInt(document.getElementById('config-max-chars')?.value) || 0;
+
 
     const fieldName = currentConfigField.label || 'Campo';
 
@@ -1211,7 +1193,13 @@ function updateFieldPreview() {
         if (usePipe) {
             previewText = `${fieldName} | ${previewText}`;
         } else {
-            previewText = `${fieldName}: ${previewText}`;
+            // Inteligência para formatar campos de classificação no preview
+            if (fieldType === FieldType.CLASSIFICATION && previewText.includes(' | ')) {
+                const parts = previewText.split(' | ');
+                previewText = `Código: ${parts[0].trim()} | Assunto: ${parts[1].trim()}`;
+            } else {
+                previewText = `${fieldName}: ${previewText}`;
+            }
         }
     }
 
@@ -1220,27 +1208,13 @@ function updateFieldPreview() {
         previewText = previewText.toUpperCase();
     }
 
-    // Aplicar limite de caracteres
-    if (maxChars > 0 && previewText.length > maxChars) {
-        if (overflowRule === 'truncate') {
-            previewText = previewText.substring(0, maxChars) + '...';
-        }
-    }
+
 
     // Construir estilos CSS
     if (bold) style += 'font-weight: bold; ';
     style += `font-size: ${fontSize}px; `;
 
-    // Aplicar regras de overflow
-    if (overflowRule === 'truncate') {
-        style += 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
-    } else if (overflowRule === 'wrap') {
-        style += 'white-space: normal; word-wrap: break-word; overflow-wrap: break-word;';
-    } else if (overflowRule === 'reduce-font') {
-        style += 'white-space: normal; word-wrap: break-word;';
-    } else {
-        style += 'white-space: normal; word-wrap: break-word;';
-    }
+
 
     // Aplicar alinhamento
     const alignment = document.querySelector('input[name="config-alignment"]:checked')?.value || 'left';
@@ -1261,14 +1235,13 @@ function saveFieldConfig() {
     // Coletar configurações básicas
     const configChanges = {
 
-        usePipe: document.getElementById('config-use-pipe')?.checked || false,
+        showLabel: document.getElementById('config-show-label')?.checked || false, // <-- ADICIONE AQUI
+
         uppercase: document.getElementById('config-uppercase')?.checked || false,
         bold: document.getElementById('config-bold')?.checked || false,
         fontSize: parseInt(document.getElementById('config-font-size')?.value) || 11,
         alignment: document.querySelector('input[name="config-alignment"]:checked')?.value || 'left',
-        columnLayout: document.querySelector('input[name="config-column-layout"]:checked')?.value || 'single',
-        overflowRule: document.querySelector('input[name="config-overflow-rule"]:checked')?.value || 'wrap',
-        maxChars: parseInt(document.getElementById('config-max-chars')?.value) || 0,
+
     };
 
     // Adicionar configurações específicas de CLASSIFICAÇÃO
@@ -1282,6 +1255,10 @@ function saveFieldConfig() {
     if (fieldType === FieldType.YEAR) {
         configChanges.yearMode = document.querySelector('input[name="config-year-mode"]:checked')?.value || 'both';
         configChanges.yearSeparator = document.getElementById('config-year-separator')?.value || ' - ';
+
+        // SALVA AS SELEÇÕES DE ORIGEM (Ano Inicial e Final)
+        configChanges.yearFieldStart = document.getElementById('config-year-field-start').value;
+        configChanges.yearFieldEnd = document.getElementById('config-year-field-end').value;
     }
 
     // Salvar as configurações
@@ -1485,13 +1462,13 @@ function renderPencilButton(key, label) {
                     class="btn btn-outline" 
                     style="padding: 0.5rem; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;" 
                     onclick="openBarcodeConfigModal()" 
-                    title="Configurar Código de Barras">
+                    title="Configuração do Campo">
                 &#9881;
             </button>
         `;
     }
 
-    // Caso especial para o campo intermediário
+    // Caso especial para o campo  FASE INTERMEDIÁRIA
     if (key === 'interm_value') {
         const config = state.currentConfig;
         const modelName = config.name;
@@ -1515,7 +1492,7 @@ function renderPencilButton(key, label) {
                 class="btn ${btnClass}" 
                 style="padding: 0.5rem; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; position: relative;" 
                 onclick="openFieldConfigModal('${key}', '${label}')" 
-                title="Configurar ${label}">
+                title="Configuração do Campo">
             &#9881;
             ${hasCustomConfig ?
                 '<span style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#10b981;border-radius:50%;"></span>' :
@@ -1546,7 +1523,7 @@ function renderPencilButton(key, label) {
                 class="btn ${btnClass}" 
                 style="padding: 0.5rem; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; position: relative;" 
                 onclick="openFieldConfigModal('${key}', '${label}')" 
-                title="Configurar ${label}">
+                title="Configuração do Campo">
             &#9881;
             ${hasCustomConfig ?
             '<span style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#10b981;border-radius:50%;"></span>' :
@@ -1579,7 +1556,7 @@ function renderHeaderSelect(lineKey, valueKey) {
 function handleHeaderLabelChange(key, value) {
     updateCustomValue(key, value);
 
-    if (value === 'CLASSIFICACAO - C12') {
+    if (value === 'Classificação - C12') {
         const valueKey = key.replace('_label', '_value');
 
         const config = state.currentConfig;
@@ -1675,7 +1652,7 @@ function renderForm() {
                                 <strong>Modo Colunas</strong>
                                 <p class="text-xs text-muted-foreground">Este modelo suporta exibição em colunas</p>
                             </div>
-                            <button class="btn btn-outline btn-sm" onclick="openColumnConfigModal()">&#9881; Configurar Colunas</button>
+                            <button class="btn btn-outline btn-sm" onclick="openColumnConfigModal()">&#9881; Configuração do Campo</button>
                         </div>
                     </div>
                 ` : ''}
@@ -1729,7 +1706,7 @@ function renderForm() {
                 <h3 class="section-header">Bloco Central</h3>
                 <div class="flex gap-2 items-center">
                     <select class="form-input flex-1" disabled style="background-color: #f1f5f9; cursor: default; opacity: 1; color: #334155;">
-                        <option selected>Conteúdo do Bloco</option>
+                        <option selected>Identificador Cliente - c5</option>
                     </select>
                     ${renderPencilButton('main_text', 'Texto Central')}
                 </div>
@@ -1739,26 +1716,24 @@ function renderForm() {
 
             ${!hideTemporalidade ? `
                 <div class="space-y-3">
-                    <h3 class="section-header">Bloco da Temporalidade</h3>
-                    
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="flex gap-1 items-center">
-                            <select class="form-input flex-1 text-xs" style="padding: 0 4px;" onchange="updateCustomValue('data_1_label', this.value)">
-                                ${data1Options.map(opt => `
-                                    <option value="${opt.value}" ${values.data_1_label === opt.value ? 'selected' : ''}>${opt.label}</option>
-                                `).join('')}
-                            </select>
-                            ${renderPencilButton('data_1_value', 'Valor Data 1')}
-                        </div>
+    <h3 class="section-header">Bloco da Temporalidade</h3>
+    
+    <div class="grid grid-cols-2 gap-2">
+        <div class="flex gap-1 items-center">
+            <div class="form-input flex-1 text-xs" style="background:#f1f5f9; display:flex; align-items:center; opacity:0.8;">
+                Ano - c20
+            </div>
+            ${renderPencilButton('data_1_value', 'Configurar Período')}
+        </div>
 
-                        <div class="flex gap-1 items-center">
-                            <select class="form-input flex-1 text-xs" style="padding: 0 4px;" onchange="updateCustomValue('interm_label', this.value)">
-                                ${intermOptions.map(opt => `
-                                    <option value="${opt.value}" ${values.interm_label === opt.value ? 'selected' : ''}>${opt.label}</option>
-                                `).join('')}
-                            </select>
-                            ${renderPencilButton('interm_value', 'Valor Intermediário')}
-                        </div>
+        <div class="flex gap-1 items-center">
+            <select class="form-input flex-1 text-xs" style="padding: 0 4px;" onchange="updateCustomValue('interm_label', this.value)">
+                ${intermOptions.map(opt => `
+                    <option value="${opt.value}" ${values.interm_label === opt.value ? 'selected' : ''}>${opt.label}</option>
+                `).join('')}
+            </select>
+            ${renderPencilButton('interm_value', 'Fase Intermediária')}
+        </div>
 
                         <div class="flex gap-1 items-center">
                             <select class="form-input flex-1 text-xs" style="padding: 0 4px;" onchange="updateCustomValue('dest_label', this.value)">
@@ -1888,7 +1863,7 @@ function renderPreviewWithColumns() {
         const d2 = vals.data_2_value || '';
         const ano = d1 && d2 ? `${d1} - ${d2}` : d1 || d2;
 
-        const intermResult = formatFieldValue(modelName, 'interm_value', vals.interm_label || 'INTERMEDIÁRIO', vals.interm_value);
+        const intermResult = formatFieldValue(modelName, 'interm_value', vals.interm_label || ' FASE INTERMEDIÁRIA', vals.interm_value);
         const destResult = formatFieldValue(modelName, 'dest_value', vals.dest_label || 'DESTINAÇÃO FINAL', vals.dest_value);
 
         html += `
@@ -1902,7 +1877,7 @@ function renderPreviewWithColumns() {
                     <!-- Linha dos sub-titulos -->
                     <tr>
                         <td style="border-right:2px solid #000; border-bottom:2px solid #000; padding:6px;" rowspan="3">${ano || '&nbsp;'}</td>
-                        <th style="border-right:2px solid #000; border-bottom:2px solid #000; padding:6px;"><b>INTERMEDIARIO</b></th>
+                        <th style="border-right:2px solid #000; border-bottom:2px solid #000; font-size:2px; padding:6px;"><b> FASE INTERMEDIÁRIA</b></th>
                         <th style="border-bottom:2px solid #000; padding:6px;"><b>DESTINACAO FINAL</b></th>
                     </tr>
                     <tr>
@@ -1969,7 +1944,7 @@ function renderPreview() {
     const layoutClass = getColumnLayoutClass(modelName);
 
     if (isIGES) {
-        const unidadeResult = formatFieldValue(modelName, 'top_value', 'UNIDADE', vals.top_value);
+        const UNIDADEResult = formatFieldValue(modelName, 'top_value', 'UNIDADE', vals.top_value);
         const numeroCaixaResult = formatFieldValue(modelName, 'title_value', 'Nº CAIXA', vals.title_value);
         const departamentoResult = formatFieldValue(modelName, 'extra_value', 'DEPARTAMENTO', vals.extra_value);
         const tipoDocumentalResult = formatFieldValue(modelName, 'line4_value', 'TIPO DOCUMENTAL', vals.line4_value);
@@ -1987,7 +1962,7 @@ function renderPreview() {
                 </div>
                 <div style="display:grid; grid-template-columns: 2fr 1fr;">
                     <div style="border-right:2px solid #000; border-bottom:2px solid #000; padding:8px;">
-                        ${unidadeResult.shouldRender ? unidadeResult.html : '&nbsp;'}
+                        ${UNIDADEResult.shouldRender ? UNIDADEResult.html : '&nbsp;'}
                     </div>
                     <div style="border-bottom:2px solid #000; padding:8px;">
                         ${numeroCaixaResult.shouldRender ? numeroCaixaResult.html : '&nbsp;'}
@@ -2001,11 +1976,11 @@ function renderPreview() {
                         ${tipoDocumentalResult.shouldRender ? tipoDocumentalResult.html : '&nbsp;'}
                     </div>
                     <div style="border-bottom:2px solid #000; padding:8px;">
-                        <strong>Código:</strong>
+                        <strong>CÓDIGO:</strong>
                     </div>
                 </div>
                 <div style="border-bottom:2px solid #000; padding:8px;">
-                    <strong>Conteúdo:</strong>
+                    <strong>CONTEÚDO:</strong>
                 </div>
                 ${linhasPaciente.map(result => `
         <div style="border-bottom:2px solid #000; text-align:center; padding:8px;">
@@ -2201,27 +2176,27 @@ function renderPreview() {
 `;
 
     // RODAPÉ - Apenas código de barras para Modelo 3 e Modelo 4
-    if (!isHomeAssistence) {
-        // NÃO RENDERIZA A TABELA DE RODAPÉ PARA MODELOS 3 E 4
-        if (modelName !== 'Modelo 3' && modelName !== 'Modelo 4') {
-            const intermResult = formatFieldValue(modelName, 'interm_value', vals.interm_label || 'INTERMEDIÁRIO', vals.interm_value);
-            const destResult = formatFieldValue(modelName, 'dest_value', vals.dest_label || 'DESTINAÇÃO FINAL', vals.dest_value);
+    if (modelName !== 'Modelo 3') {
+        const intermResult = formatFieldValue(modelName, 'interm_value', vals.interm_label || ' FASE INTERMEDIÁRIA', vals.interm_value);
+        const destResult = formatFieldValue(modelName, 'dest_value', vals.dest_label || 'DESTINAÇÃO FINAL', vals.dest_value);
 
-            let nomeRodape = "RODAPÉ";
-            if (modelName === 'Modelo 1') nomeRodape = "PRAZO DE GUARDA";
-            else if (modelName === 'Modelo 2') nomeRodape = "PRAZO DE GUARDA";
+        // Define o texto baseado no modelo
+        let nomeRodape = "PRAZO DE GUARDA";
+        if (modelName === 'Modelo 1' || modelName === 'Modelo 2') {
+            nomeRodape = "PRAZO DE GUARDA";
+        }
 
-            html += `
+        html += `
 <div style="border-bottom:2px solid #000;">
     <table style="width:100%; border-collapse: collapse; font-size:12px; text-align:left;">
         <tr>
             <th style="width:25%; border-right:2px solid #000; border-bottom:2px solid #000; padding:3px;">ANO</th>
-            <th colspan="2" style="border-bottom:2px solid #000; padding:3px;">${nomeRodape}</th>
+            <th colspan="2" style="border-bottom:2px solid #000; padding:3px 3px 3px 50px;">${nomeRodape}</th>
         </tr>
         <tr>
             <td style="border-right:2px solid #000; border-bottom:2px solid #000; padding:3px;" rowspan="3">${ano || '&nbsp;'}</td>
-            <th style="border-right:2px solid #000; border-bottom:2px solid #000; padding:3px;"><b>INTERMEDIARIO</b></th>
-            <th style="border-bottom:2px solid #000; padding:3px;"><b>DESTINACAO FINAL</b></th>
+            <th style="border-right:2px solid #000; border-bottom:2px solid #000; padding:3px; font-size:9px;"><b> FASE INTERMEDIÁRIA</b></th>
+            <th style="border-bottom:2px solid #000; padding:3px; font-size:9px;"><b>DESTINACAO FINAL</b></th>
         </tr>
         <tr>
             <td style="border-right:2px solid #000; padding:3px; min-height:20px;">${intermResult.shouldRender ? intermResult.html : ""}</td>
@@ -2234,7 +2209,6 @@ function renderPreview() {
     </table>
 </div>
 `;
-        }
     }
 
     const barcodeData = getBarcodeDisplayValue(config);
@@ -2349,14 +2323,30 @@ function renderMirrorList() {
             ${state.mirrors.length === 0 ?
             '<div class="p-4 text-center text-muted-foreground text-sm">Nenhum modelo salvo</div>' :
             state.mirrors.map(mirror => `
-                    <div class="mirror-item ${state.selectedMirrorId === mirror.id ? 'mirror-item-selected' : ''}" 
-                         onclick="loadMirror('${mirror.id}')">
-                        <div class="mirror-info">
-                            <div class="mirror-name">${mirror.name || 'Sem nome'}</div>
-                        </div>
-                        <button type="button" class="action-button-destructive" onclick="deleteMirror('${mirror.id}', event)">&#128465;</button>
-                    </div>
-                `).join('')
+    <div class="mirror-item ${state.selectedMirrorId === mirror.id ? 'mirror-item-selected' : ''}" 
+         onclick="loadMirror('${mirror.id}')">
+        <div class="mirror-info">
+            <div class="mirror-name">${mirror.name || 'Sem nome'}</div>
+        </div>
+        <div class="mirror-actions" style="display: flex; gap: 4px;">
+            <button type="button" class="action-button" onclick="cloneMirror('${mirror.id}', event)" title="Clonar Modelo">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            </button>
+            
+            <button type="button" class="action-button-destructive" onclick="deleteMirror('${mirror.id}', event)" title="Excluir">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+`).join('')
         }
         </div>
     `;
@@ -2512,25 +2502,26 @@ if (document.readyState === 'loading') {
 // ==========================================
 // MODAL DE CONFIGURAÇÃO DO CÓDIGO DE BARRAS
 // ==========================================
-
+// 2. Atualize a função openBarcodeConfigModal para lidar com o novo campo
 function openBarcodeConfigModal() {
     const modal = document.getElementById('barcode-config-modal');
     if (!modal) return;
 
     const config = state.currentConfig;
-    const currentSource = config.barcodeSource || 'cliente';
+    const currentSource = config.barcodeSource || 'sos';
 
-    // Selecionar o radio button correto
     const radios = document.querySelectorAll('input[name="modal-barcode-source"]');
     radios.forEach(radio => {
-        if (radio.value === currentSource) {
-            radio.checked = true;
-        }
+        radio.checked = (radio.value === currentSource);
     });
 
-    // Atualizar preview
-    updateBarcodePreview();
+    // Atualiza a visibilidade do select baseado na fonte
+    const customSelectDiv = document.getElementById('barcode-custom-select-container');
+    customSelectDiv.style.display = (currentSource === 'personalizado') ? 'block' : 'none';
 
+    document.getElementById('barcode-custom-field-select').value = config.barcodeCustomField || 'c5';
+
+    updateBarcodePreview();
     modal.style.display = 'flex';
 }
 
@@ -2562,18 +2553,14 @@ function updateBarcodePreview() {
 }
 
 function saveBarcodeConfig() {
-    const selectedSource = document.querySelector('input[name="modal-barcode-source"]:checked')?.value || 'cliente';
+    const selectedSource = document.querySelector('input[name="modal-barcode-source"]:checked').value;
+    const customField = document.getElementById('barcode-custom-field-select').value;
 
-    // Atualizar a configuração - USAR updateConfig que já salva no localStorage
     updateConfig('barcodeSource', selectedSource);
+    updateConfig('barcodeCustomField', customField);
 
-    // Fechar o modal
     closeBarcodeConfigModal();
-
-    // Mostrar toast de confirmação
     showToast('Configuração do código de barras salva!');
-
-    // Forçar uma atualização do preview
     renderPreview();
 }
 
@@ -2597,6 +2584,26 @@ function clearLocalStorage() {
         }, 1500);
     }
 }
+
+
+function cloneMirror(id, event) {
+    if (event) event.stopPropagation();
+
+    const original = state.mirrors.find(m => m.id === id);
+    if (!original) return;
+
+    const clone = JSON.parse(JSON.stringify(original));
+    clone.id = generateId();
+    clone.name = `${original.name} (Cópia)`;
+
+    state.mirrors.push(clone);
+    saveToLocalStorage();
+    renderMirrorList();
+    showToast('Modelo clonado com sucesso!');
+}
+
+// Não esqueça de exportar para o escopo global no final do arquivo
+window.cloneMirror = cloneMirror;
 
 
 
@@ -2636,5 +2643,6 @@ window.saveBarcodeConfig = saveBarcodeConfig;
 
 // Exportar a função
 window.clearLocalStorage = clearLocalStorage;
+
 
 
